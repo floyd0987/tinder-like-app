@@ -1,28 +1,20 @@
-import UserCard from "@/app/components/UserCard";
-
 import { Box } from "@mui/material";
+import { fetchUsers } from "@/lib/api";
+import UserSwiper from "@/app/components/UserSwiper";
+import { User } from "@/types/user";
 
-// Function to fetch a single profile from the backend
-const fetchProfile = async () => {
-  const response = await fetch("http://localhost:3001/api/v1/users");
-  const users = await response.json();
-
-  return users[0]; // Return the first profile
+const fetchInitialUser = async (): Promise<User | null> => {
+  const users = await fetchUsers();
+  if (!users.length) return null;
+  return users[Math.floor(Math.random() * users.length)];
 };
 
 const HomePage = async () => {
-  const initialProfile = await fetchProfile();
+  const initialUser = await fetchInitialUser();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <UserCard initialProfile={initialProfile} />
+    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+      <UserSwiper initialUser={initialUser} loggedInUserId={1} />
     </Box>
   );
 };
