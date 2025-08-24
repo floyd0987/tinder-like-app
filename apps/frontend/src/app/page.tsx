@@ -4,16 +4,27 @@ import UserSwiper from "@/app/components/UserSwiper";
 import { User } from "@/types/user";
 
 const fetchInitialUser = async (): Promise<User | null> => {
-  const users = await fetchUsers();
-  if (!users.length) return null;
-  return users[Math.floor(Math.random() * users.length)];
+  try {
+    const users = await fetchUsers();
+    if (!users.length) return null;
+    return users[Math.floor(Math.random() * users.length)];
+  } catch {
+    return null;
+  }
 };
 
 const HomePage = async () => {
   const initialUser = await fetchInitialUser();
 
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
       <UserSwiper initialUser={initialUser} loggedInUserId={1} />
     </Box>
   );
