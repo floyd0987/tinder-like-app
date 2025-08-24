@@ -1,30 +1,32 @@
 version: "3.8"
 services:
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/backend/Dockerfile
-  #   container_name: backend
-  #   ports:
-  #     - "4000:3001"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - DATABASE_URL=postgres://postgres:postgres@db:5432/mydb
-  #   depends_on:
-  #     - db
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    container_name: backend
+    ports:
+      # Change this line to map localhost:3001 to the container's port 3001
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/mydb
+    depends_on:
+      - db
+    # The command waits for the DB, applies migrations, and then starts the app
+    command: sh -c "cd apps/backend &&  npx prisma migrate deploy && npm run start:prod"
 
-  # frontend:
-  #   build:
-  #     context: .
-  #     dockerfile: apps/frontend/Dockerfile
-  #   container_name: frontend
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     - NODE_ENV=production
-  #     - API_URL=http://backend:3001
-  #   depends_on:
-  #     - backend
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_URL=http://backend:3001
+    depends_on:
+      - backend
 
   db:
     image: postgres:16

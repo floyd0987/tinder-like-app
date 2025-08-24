@@ -8,7 +8,8 @@ const fetchInitialUser = async (): Promise<User | null> => {
     const users = await fetchUsers();
     if (!users.length) return null;
     return users[Math.floor(Math.random() * users.length)];
-  } catch {
+  } catch (error) {
+    console.error("Error fetching users:", error);
     return null;
   }
 };

@@ -22,7 +22,6 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const getNextUser = async () => {
-    if (!currentUser) return;
     const users = await fetchUsers();
     const unseen = users.filter((u) => !seenUserIds.has(u.id));
     if (!unseen.length) {
@@ -69,7 +68,6 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
     >
       <Box sx={{ position: "relative" }}>
         {" "}
-        
         <UserCard
           user={currentUser}
           onLike={() => handleAction("LIKE")}

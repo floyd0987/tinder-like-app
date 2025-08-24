@@ -1,35 +1,37 @@
-# --- Dependencies ---
-FROM node:20-alpine AS deps
-WORKDIR /app
-
-# Copy root and backend package.json
-COPY package*.json ./
-COPY apps/backend/package*.json ./apps/backend/
-
-# Install deps (include devDependencies for build)
-RUN npm install --workspace=apps/backend
-
-# --- Build stage ---
+# --- Stage 1: Build and Dependencies ---
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-COPY --from=deps /app/node_modules ./node_modules
+# Copy the entire project context
 COPY . .
 
-# Build NestJS
-RUN npm run build --workspace=apps/backend
+# Install necessary runtime tools
+RUN apk add --no-cache bash wget
 
-# --- Production runtime ---
+# Install all dependencies (dev and prod)
+RUN npm install
+
+# Change to the backend directory and run a full build
+WORKDIR /app/apps/backend
+RUN npx prisma generate
+RUN npm run build
+
+# --- Stage 2: Production Runtime ---
 FROM node:20-alpine AS runner
 WORKDIR /app
 
+# Install bash in the final image
+RUN apk add --no-cache bash
+
+# Set production environment
 ENV NODE_ENV=production
 
-# Copy only build output + production deps
-COPY --from=builder /app/apps/backend/dist ./apps/backend/dist
-COPY --from=builder /app/apps/backend/package*.json ./apps/backend/
-COPY --from=deps /app/node_modules ./node_modules
 
+# Copy the entire backend application from the builder stage
+COPY --from=builder /app/apps/backend ./apps/backend
+
+# Copy the root node_modules for hoisted dependencies
+COPY --from=builder /app/node_modules ./node_modules
+
+# Expose the application port
 EXPOSE 3001
-
-CMD ["npm", "run", "start:prod", "--workspace=apps/backend"]
