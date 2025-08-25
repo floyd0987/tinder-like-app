@@ -1,15 +1,26 @@
 import { Box } from "@mui/material";
-import { fetchUsers } from "@/lib/api";
+import { fetchUsers, getRandomUser } from "@/lib/api";
 import UserSwiper from "@/app/components/UserSwiper";
 import { User } from "@/types/user";
 
+// const fetchInitialUser = async (): Promise<User | null> => {
+//   try {
+//     const users = await fetchUsers();
+//     if (!users.length) return null;
+//     return users[Math.floor(Math.random() * users.length)];
+//   } catch (error) {
+//     console.error("Error fetching users:", error);
+//     return null;
+//   }
+// };
+
 const fetchInitialUser = async (): Promise<User | null> => {
   try {
-    const users = await fetchUsers();
-    if (!users.length) return null;
-    return users[Math.floor(Math.random() * users.length)];
+    const user = await getRandomUser(1, []);
+    console.log("Fetched initial user:", user); // Debugging line
+    return user;
   } catch (error) {
-    console.error("Error fetching users:", error);
+    console.error("Error fetching initial user:", error);
     return null;
   }
 };

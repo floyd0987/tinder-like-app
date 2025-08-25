@@ -1,7 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FindRandomDto } from './dto/find-random.dto';
 
 @Controller('users')
 export class UsersController {
@@ -15,6 +24,16 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  // Use a POST request to handle a list of seen user IDs in the body
+  @Post('random')
+  async findRandom(@Body() body: FindRandomDto) {
+    // Correctly call the service method and await the result
+    return await this.usersService.findRandom(
+      body.currentUserId,
+      body.seenUserIds,
+    );
   }
 
   @Get(':id')

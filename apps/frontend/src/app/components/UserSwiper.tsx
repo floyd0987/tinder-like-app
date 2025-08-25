@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Box, Typography, Paper, Button } from "@mui/material";
 import UserCard from "./UserCard";
 import { User } from "@/types/user";
-import { fetchUsers, sendAction } from "@/lib/api";
+import { getRandomUser, sendAction } from "@/lib/api";
 
 interface UserSwiperProps {
   initialUser: User | null;
@@ -15,22 +15,30 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
   loggedInUserId,
 }) => {
   const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
-  const [seenUserIds, setSeenUserIds] = useState<Set<string | undefined>>(
-    new Set([initialUser?.id])
+  const [seenUserIds, setSeenUserIds] = useState<Set<number>>(
+    new Set([Number(loggedInUserId)])
   );
   const [isMatch, setIsMatch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const getNextUser = async () => {
-    const users = await fetchUsers();
-    const unseen = users.filter((u) => !seenUserIds.has(u.id));
-    if (!unseen.length) {
+    try {
+      console.log("Current User:", currentUser); // Debugging line
+      console.log("Seen User IDs:", seenUserIds); // Debugging line
+
+      const currentUserId = Number(currentUser?.id);
+      const seenIds = Array.from(seenUserIds) as number[];
+
+      const next = await getRandomUser(currentUserId, seenIds);
+
+      setCurrentUser(next);
+      if (next?.id) {
+        setSeenUserIds((prev) => new Set(prev).add(Number(next.id)));
+      }
+    } catch (error) {
+      console.error("Failed to fetch a random user:", error);
       setCurrentUser(null);
-      return;
     }
-    const next = unseen[Math.floor(Math.random() * unseen.length)];
-    setCurrentUser(next);
-    setSeenUserIds((prev) => new Set(prev).add(next.id));
   };
 
   const handleAction = async (action: "LIKE" | "DISLIKE") => {
@@ -92,6 +100,7 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
               {currentUser.name}
             </Typography>
             <Button
+              aria-label="Okay"
               variant="contained"
               sx={{ mt: 2 }}
               onClick={handleMatchOkay}

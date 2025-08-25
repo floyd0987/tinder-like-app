@@ -16,8 +16,8 @@ const UserCard: React.FC<UserCardProps> = ({ user, onLike, onDislike, isLoading 
       <Typography variant="h5">{user.name}, {user.age} (ID: {user.id})</Typography>
     </CardContent>
     <Box sx={{ display: "flex", justifyContent: "space-around", padding: "16px" }}>
-      <Button variant="contained" color="success" onClick={onLike} disabled={isLoading}>Like</Button>
-      <Button variant="contained" color="error" onClick={onDislike} disabled={isLoading}>Dislike</Button>
+      <Button aria-label="Like" variant="contained" color="success" onClick={onLike} disabled={isLoading}>Like</Button>
+      <Button aria-label="Dislike" variant="contained" color="error" onClick={onDislike} disabled={isLoading}>Dislike</Button>
     </Box>
   </Card>
 );
