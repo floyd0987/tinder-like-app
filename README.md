@@ -1,138 +1,153 @@
-# Turborepo starter
+# Tinder-Like App - Backend API Specification & Setup
 
-This Turborepo starter is maintained by the Turborepo core team.
+## 1. Project Overview
 
-## Using this example
+This is a simple Tinder-like app built with Next.js (frontend) and a REST API backend.
+Users can swipe through profiles and perform actions: `LIKE` or `DISLIKE`.
+The app handles matches, API errors, and edge cases such as running out of profiles.
 
-Run the following command:
+---
 
-```sh
-npx create-turbo@latest
-```
+## 2. Environment Setup
 
-## What's inside?
+### 2.1 Environment Variables
 
-This Turborepo includes the following packages/apps:
+Create a `.env.local` file for local development, `.env.staging` for staging, and `.env.production` for production:
 
-### Apps and Packages
+<pre class="overflow-visible!" data-start="714" data-end="813"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-env"><span>NEXT_PUBLIC_API_URL=http://localhost:4000   # change to staging/prod URL in other stages
+</span></code></div></div></pre>
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 2.2 Installing Dependencies
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+<pre class="overflow-visible!" data-start="847" data-end="920"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span># Install dependencies</span><span>
+npm install
+</span><span># Run frontend</span><span>
+npm run dev
+</span></span></code></div></div></pre>
 
-### Utilities
+### 2.3 Running Tests
 
-This Turborepo has some additional tools already setup for you:
+<pre class="overflow-visible!" data-start="944" data-end="1012"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-bash"><span><span>npm run </span><span>test</span><span>
+</span><span># Check coverage</span><span>
+npm run </span><span>test</span><span> -- --coverage
+</span></span></code></div></div></pre>
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+---
 
-### Build
+## 3. API Specification
 
-To build all apps and packages, run the following command:
+### 3.1 Base URL
 
-```
-cd my-turborepo
+<pre class="overflow-visible!" data-start="1061" data-end="1073"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>/api
+</span></span></code></div></div></pre>
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+Full endpoints will be:
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
+* Local: `http://localhost:4000/api/...`
+* Staging/Prod: set via `NEXT_PUBLIC_API_URL`
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### 3.2 Endpoints
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+#### 3.2.1 Get Random User
 
-### Develop
+<pre class="overflow-visible!" data-start="1237" data-end="1262"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>GET /users/random
+</span></span></code></div></div></pre>
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
-
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+**Query Parameters**
 
 
-npx prisma db seed
+| Name          | Type     | Required | Description               |
+| ------------- | -------- | -------- | ------------------------- |
+| currentUserId | number   | yes      | ID of the logged-in user  |
+| seenIds       | number[] | yes      | IDs of users already seen |
+
+**Response**
+
+<pre class="overflow-visible!" data-start="1607" data-end="1687"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-json"><span><span>{</span><span>
+  </span><span>"id"</span><span>:</span><span> </span><span>2</span><span>,</span><span>
+  </span><span>"name"</span><span>:</span><span> </span><span>"Bob"</span><span>,</span><span>
+  </span><span>"age"</span><span>:</span><span> </span><span>30</span><span>,</span><span>
+  </span><span>"photoUrl"</span><span>:</span><span> </span><span>"bob.jpg"</span><span>
+</span><span>}</span><span>
+</span></span></code></div></div></pre>
+
+**Errors**
+
+* `404 Not Found` - no more users available
+* `500 Internal Server Error` - unexpected failure
+
+---
+
+#### 3.2.2 Send Action (LIKE/DISLIKE)
+
+<pre class="overflow-visible!" data-start="1839" data-end="1865"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre!"><span><span>POST /users/action
+</span></span></code></div></div></pre>
+
+**Request Body**
+
+<pre class="overflow-visible!" data-start="1883" data-end="1961"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-json"><span><span>{</span><span>
+  </span><span>"userId"</span><span>:</span><span> </span><span>1</span><span>,</span><span>
+  </span><span>"targetId"</span><span>:</span><span> </span><span>2</span><span>,</span><span>
+  </span><span>"action"</span><span>:</span><span> </span><span>"LIKE"</span><span> | </span><span>"DISLIKE"</span><span>
+</span><span>}</span><span>
+</span></span></code></div></div></pre>
+
+**Response**
+
+<pre class="overflow-visible!" data-start="1976" data-end="2015"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-json"><span><span>{</span><span>
+  </span><span>"match"</span><span>:</span><span> </span><span>true</span><span> | </span><span>false</span><span>
+</span><span>}</span><span>
+</span></span></code></div></div></pre>
+
+**Errors**
+
+* `400 Bad Request` - invalid IDs or action
+* `500 Internal Server Error` - unexpected failure
+
+---
+
+### 3.3 Error Responses
+
+All errors return:
+
+<pre class="overflow-visible!" data-start="2172" data-end="2218"><div class="contain-inline-size rounded-2xl relative bg-token-sidebar-surface-primary"><div class="sticky top-9"><div class="absolute end-0 bottom-0 flex h-9 items-center pe-2"><div class="bg-token-bg-elevated-secondary text-token-text-secondary flex items-center gap-4 rounded-sm px-2 font-sans text-xs"><span class="" data-state="closed"></span></div></div></div><div class="overflow-y-auto p-4" dir="ltr"><code class="whitespace-pre! language-json"><span><span>{</span><span>
+  </span><span>"error"</span><span>:</span><span> </span><span>"Error description"</span><span>
+</span><span>}</span><span>
+</span></span></code></div></div></pre>
+
+---
+
+## 4. Frontend Usage
+
+* Uses **Material UI** components (`Box`, `Paper`, `Typography`, `Button`) for styling.
+* Handles edge cases:
+  * No users available → shows message
+  * API errors → fallback message
+  * Match notification → overlay with "Okay" button
+
+---
+
+## 5. Testing & Coverage
+
+* Unit tests written with `@testing-library/react` and Jest
+* Components covered: `UserSwiper`, `UserCard`
+* Coverage: 100% statements/functions/lines
+* API utils coverage should also be added to meet full project coverage
+
+---
+
+## 6. Multi-Stage Deployment
+
+* Use `.env` files for each stage
+* Frontend fetches API URLs via `NEXT_PUBLIC_API_URL`
+* No code changes needed between DEV/STAGING/PROD
+
+---
+
+## 7. How to Extend
+
+* Add new actions (e.g., SUPERLIKE) → extend `/users/action` endpoint
+* Add authentication → include token in headers for `/users/random` and `/users/action`
+* Integrate real database → `getRandomUser` can query DB instead of mock array
