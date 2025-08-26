@@ -75,13 +75,13 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
       }}
     >
       <Box sx={{ position: "relative" }}>
-        {" "}
         <UserCard
           user={currentUser}
           onLike={() => handleAction("LIKE")}
           onDislike={() => handleAction("DISLIKE")}
           isLoading={isLoading}
         />
+
         {isMatch && (
           <Paper
             sx={{
@@ -96,9 +96,11 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
             }}
           >
             <Typography variant="h4">You got a match!</Typography>
+
             <Typography variant="h6" sx={{ mt: 2 }}>
               {currentUser.name}
             </Typography>
+
             <Button
               aria-label="Okay"
               variant="contained"
