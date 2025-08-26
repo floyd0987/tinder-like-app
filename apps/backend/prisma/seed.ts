@@ -44,7 +44,7 @@ async function main() {
     { id: 38, email: 'victoria2@example.com', name: 'Victoria', age: 26, photoUrl: '/images/3.jpg' },
     { id: 39, email: 'anna@example.com', name: 'Anna', age: 24, photoUrl: '/images/4.jpg' },
     { id: 40, email: 'alice2@example.com', name: 'Alice', age: 22, photoUrl: '/images/5.jpg' },
-    { id: 41, email: 'ekaterina2@example.com', name: 'Ekaterina', age: 25, photoUrl: '/images/1.jpg' },
+    { id: 41, email: 'jessica@example.com', name: 'Jessica', age: 25, photoUrl: '/images/1.jpg' },
     { id: 42, email: 'eve2@example.com', name: 'Eve', age: 23, photoUrl: '/images/2.jpg' },
     { id: 43, email: 'grace2@example.com', name: 'Grace', age: 26, photoUrl: '/images/3.jpg' },
     { id: 44, email: 'heidi2@example.com', name: 'Heidi', age: 24, photoUrl: '/images/4.jpg' },

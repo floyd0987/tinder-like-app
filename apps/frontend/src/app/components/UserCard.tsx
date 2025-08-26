@@ -127,14 +127,14 @@ const UserCard: React.FC<UserCardProps> = ({
             width: "46%",
             fontSize: "1.1rem",
             bgcolor: "#e1ecf7",
-            borderColor: "#000",
+            borderColor: "#222",
             color: "#000",
             // fontWeight: 700,
             py: 1.2,
             letterSpacing: "1px",
           }}
         >
-          LIKE
+          Like
         </Button>
         <Button
           aria-label="Dislike"
@@ -146,14 +146,14 @@ const UserCard: React.FC<UserCardProps> = ({
             width: "46%",
             fontSize: "1.1rem",
             bgcolor: "#e1ecf7",
-            borderColor: "#000",
+            borderColor: "#222",
             color: "#000",
             // fontWeight: 700,
             py: 1.2,
             letterSpacing: "1px",
           }}
         >
-          DISLIKE
+          Dislike
         </Button>
       </Box>
     </Card>
