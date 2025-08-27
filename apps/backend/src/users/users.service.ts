@@ -12,7 +12,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.prisma.user.findMany({ where: { id: { not: 1 } } });
+    return this.prisma.user.findMany();
   }
 
   async findRandom(currentUserId: number, seenUserIds: number[]) {
