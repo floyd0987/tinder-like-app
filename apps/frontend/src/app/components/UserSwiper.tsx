@@ -4,6 +4,7 @@ import { Box, Typography, Paper, Button } from "@mui/material";
 import UserCard from "./UserCard";
 import { User } from "@/types/user";
 import { getRandomUser, sendAction } from "@/lib/api";
+import MatchPopup from "./MatchPopup";
 
 interface UserSwiperProps {
   initialUser: User | null;
@@ -23,8 +24,8 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
 
   const getNextUser = async () => {
     try {
-      console.log("Current User:", currentUser); // Debugging line
-      console.log("Seen User IDs:", seenUserIds); // Debugging line
+      // console.log("Current User:", currentUser);
+      // console.log("Seen User IDs:", seenUserIds);
 
       const currentUserId = Number(currentUser?.id);
       const seenIds = Array.from(seenUserIds) as number[];
@@ -62,7 +63,11 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
   };
 
   if (!currentUser) {
-    return <Typography variant="h5">No more users available.</Typography>;
+    return (
+      <Typography variant="h5" data-testid="no-users">
+        No more users available.
+      </Typography>
+    );
   }
 
   return (
@@ -83,33 +88,7 @@ const UserSwiper: React.FC<UserSwiperProps> = ({
         />
 
         {isMatch && (
-          <Paper
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              padding: 4,
-              textAlign: "center",
-              backgroundColor: "rgba(0,0,0,0.2)",
-            }}
-          >
-            <Typography variant="h4">You got a match!</Typography>
-
-            <Typography variant="h6" sx={{ mt: 2 }}>
-              {currentUser.name}
-            </Typography>
-
-            <Button
-              aria-label="Okay"
-              variant="contained"
-              sx={{ mt: 2 }}
-              onClick={handleMatchOkay}
-            >
-              Okay
-            </Button>
-          </Paper>
+          <MatchPopup onClose={handleMatchOkay} isLoading={isLoading} />
         )}
       </Box>
     </Box>

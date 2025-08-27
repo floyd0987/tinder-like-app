@@ -6,6 +6,8 @@ WORKDIR /app
 COPY package.json ./
 COPY apps/frontend/package*.json ./apps/frontend/
 COPY apps/frontend/next.config.ts ./apps/frontend/next.config.ts
+COPY apps/frontend/.env ./apps/frontend/.env
+
 
 # Install dependencies
 RUN npm install --workspace=apps/frontend

@@ -1,12 +1,5 @@
 "use client";
-import {
-  Card,
-  CardMedia,
-  Typography,
-  Box,
-  Button,
-  Paper,
-} from "@mui/material";
+import { Card, CardMedia, Typography, Box, Button, Paper } from "@mui/material";
 import { User } from "@/types/user";
 
 interface UserCardProps {
@@ -25,9 +18,9 @@ const UserCard: React.FC<UserCardProps> = ({
   <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
     <Card
       sx={{
-        width: 420,
-        height: 680,
-        
+        // width: 420,
+        // height: 680,
+
         // borderRadius: "10px",
         boxShadow: "none",
         background: "transparent",
@@ -43,7 +36,7 @@ const UserCard: React.FC<UserCardProps> = ({
       <Box
         sx={{
           width: "100%",
-          height: 680,
+          height: 480,
           background: "#e97ffb",
           position: "relative",
           // borderTopLeftRadius: "10px",
@@ -96,16 +89,11 @@ const UserCard: React.FC<UserCardProps> = ({
         </Paper>
       </Box>
 
-
       {/* Buttons area */}
 
       <Box
         sx={{
           width: "100%",
-          minHeight: 70,
-          background: "#f9fbfc",
-          borderBottomLeftRadius: "10px",
-          borderBottomRightRadius: "10px",
           borderTop: "1px solid #e3e7ec",
           display: "flex",
           justifyContent: "space-between",
@@ -118,6 +106,7 @@ const UserCard: React.FC<UserCardProps> = ({
         }}
       >
         <Button
+          data-testid="like-btn"
           aria-label="Like"
           variant="outlined"
           onClick={onLike}
@@ -129,14 +118,15 @@ const UserCard: React.FC<UserCardProps> = ({
             bgcolor: "#e1ecf7",
             borderColor: "#222",
             color: "#000",
-            // fontWeight: 700,
             py: 1.2,
             letterSpacing: "1px",
           }}
         >
           Like
         </Button>
+
         <Button
+          data-testid="dislike-btn"
           aria-label="Dislike"
           variant="outlined"
           onClick={onDislike}
@@ -148,7 +138,6 @@ const UserCard: React.FC<UserCardProps> = ({
             bgcolor: "#e1ecf7",
             borderColor: "#222",
             color: "#000",
-            // fontWeight: 700,
             py: 1.2,
             letterSpacing: "1px",
           }}

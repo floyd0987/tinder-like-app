@@ -44,5 +44,10 @@ export async function getRandomUser(currentUserId: number, seenUserIds: number[]
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  return response.json();
+  try {
+    const data = await response.json();
+    return data ?? null;
+  } catch {
+    return null;
+  }
 }
