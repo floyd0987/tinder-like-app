@@ -8,7 +8,12 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
 
   app.enableCors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:10000',
+      'http://10.201.244.4:10000',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS'
   });
 
   // Swagger
