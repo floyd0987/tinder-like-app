@@ -70,6 +70,7 @@ Then generate the Prisma client for the backend:
 cd apps/backend
 npx prisma generate
 cd ../..
+```
 
 ### Development
 To run both frontend and backend in development mode from root (with hot reload):
