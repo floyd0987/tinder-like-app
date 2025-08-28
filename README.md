@@ -52,27 +52,49 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
    ```env
    DATABASE_URL="postgresql://postgres:postgres@localhost:5432/mydb?schema=public"
    ```
-**Run migrations and generate Prisma client:**
-
-   ```bash
-   npx prisma generate
-   ```
 
 
-### Installing Dependencies & Running the App (Turborepo)
+# Turborepo Starter (Backend + Frontend)
 
-From the project root, run:
+This project is organized as a **Turborepo** containing a Next.js frontend and a Node.js/Prisma backend.
 
+---
+
+## Installation
+
+From the repository root, install all dependencies:
 ```bash
 npm install
+
+Then generate the Prisma client for the backend:
+cd apps/backend
+npx prisma generate
+cd ../..
+
+### Development
+To run both frontend and backend in development mode from root (with hot reload):
+```bash
 npm run dev
 ```
 
-This will install all dependencies and start both frontend and backend apps using Turborepo.
+### Production Build
+Build all apps:
+```bash
+npm run build
+```
 
+### Running in Production
 
+After building, start each app separately:
+```bash
+# Start backend
+cd apps/backend
+npm run start
 
-
+# Start frontend
+cd ../frontend
+npm run start
+```
 
 
 ### Running Tests
